@@ -1,6 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
+const supabase = createClientComponentClient();
 
 export default function ContactForm() {
   const {
@@ -8,8 +11,26 @@ export default function ContactForm() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
+  const [status, setStatus] = useState("");
+
+  const onSubmit = async (data) => {
+    console.log(data);
+
+    const { error } = await supabase.from("messages").insert([
+      {
+        name: data.name,
+        email: data.email,
+        phone: data["phone number"],
+        details: data["project details"],
+      },
+    ]);
+
+    if (error) {
+      setStatus("Failed to send message.");
+    } else {
+      setStatus("Message sent successfully!");
+    }
+  };
 
   return (
     <form
@@ -25,23 +46,35 @@ export default function ContactForm() {
         focus:border-gray bg-transparent"
       />
       and I want to discuss a potential project. You can email me at
-      <input type="email" placeholder="your@email" {...register("email", {})}  className="outline-none border-0 p-0 mx-2 focus:ring-0 placeholder:text-center placeholder:text-lg border-b border-gray 
-        focus:border-gray bg-transparent"/>
+      <input
+        type="email"
+        placeholder="your@email"
+        {...register("email", { required: true })}
+        className="outline-none border-0 p-0 mx-2 focus:ring-0 placeholder:text-center placeholder:text-lg border-b border-gray 
+        focus:border-gray bg-transparent"
+      />
       or reach out to me on
       <input
         type="tel"
         placeholder="your phone"
-        {...register("phone number", {})}
+        {...register("phone number", { required: true })}
         className="outline-none border-0 p-0 mx-2 focus:ring-0 placeholder:text-center placeholder:text-lg border-b border-gray 
         focus:border-gray bg-transparent"
       />
       Here are some details about my project: <br />
-      <textarea {...register("project details", {})} 
-      placeholder="My project is about..."
-      rows={3}
-      className="w-full outline-none border-0 p-0 mx-0 focus:ring-0  placeholder:text-lg border-b border-gray 
-        focus:border-gray bg-transparent" />
-      <input type="submit" value="send request" className="mt-8 font-medium inline-block capitalize text-lg sm:text-xl py-2 sm:py-3 px-6 sm:px-8 border-2 border-solid border-dark dark:border-light rounded cursor-pointer" />
+      <textarea
+        {...register("project details", { required: true })}
+        placeholder="My project is about..."
+        rows={3}
+        className="w-full outline-none border-0 p-0 mx-0 focus:ring-0 placeholder:text-lg border-b border-gray 
+        focus:border-gray bg-transparent"
+      />
+      <input
+        type="submit"
+        value="send request"
+        className="mt-8 font-medium inline-block capitalize text-lg sm:text-xl py-2 sm:py-3 px-6 sm:px-8 border-2 border-solid border-dark dark:border-light rounded cursor-pointer"
+      />
+      {status && <p className="mt-4">{status}</p>}
     </form>
   );
 }
