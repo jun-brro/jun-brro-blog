@@ -437,3 +437,61 @@ export const DribbbleIcon = ({ className, ...rest }) => {
     </svg>
   );
 };
+
+export const EmailIcon = ({ className, ...rest }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={42}
+      height={43}
+      viewBox="0 0 42 43"
+      className={`w-full h-auto ${className}`}
+      {...rest}
+    >
+      <path
+        fill="#D44638"
+        d="M41 4.5H1a1 1 0 0 0-1 1v32a1 1 0 0 0 1 1h40a1 1 0 0 0 1-1v-32a1 1 0 0 0-1-1zM21 24.5L1 9.5h40L21 24.5zM1 37.5v-25l16 12 4 3 4-3 16-12v25H1z"
+      />
+    </svg>
+  );
+};
+
+export const InstagramIcon = ({ className, ...rest }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={42}
+      height={43}
+      viewBox="0 0 42 43"
+      className={`w-full h-auto ${className}`}
+      {...rest}
+    >
+      <defs>
+        <linearGradient
+          id="instagramGradient"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="100%"
+        >
+          <stop offset="0%" style={{ stopColor: "#f09433", stopOpacity: 1 }} />
+          <stop offset="25%" style={{ stopColor: "#e6683c", stopOpacity: 1 }} />
+          <stop offset="50%" style={{ stopColor: "#dc2743", stopOpacity: 1 }} />
+          <stop offset="75%" style={{ stopColor: "#cc2366", stopOpacity: 1 }} />
+          <stop
+            offset="100%"
+            style={{ stopColor: "#bc1888", stopOpacity: 1 }}
+          />
+        </linearGradient>
+      </defs>
+      <path
+        fill="url(#instagramGradient)"
+        d="M29.6 2.203H12.4C6.6 2.203 2 6.803 2 12.603v17.2c0 5.8 4.6 10.4 10.4 10.4h17.2c5.8 0 10.4-4.6 10.4-10.4v-17.2c0-5.8-4.6-10.4-10.4-10.4zM21 29.603c-4.6 0-8.4-3.8-8.4-8.4s3.8-8.4 8.4-8.4 8.4 3.8 8.4 8.4-3.8 8.4-8.4 8.4zm9.6-15.2c-.8 0-1.6-.8-1.6-1.6s.8-1.6 1.6-1.6 1.6.8 1.6 1.6-.8 1.6-1.6 1.6z"
+      />
+      <path
+        fill="#FFF"
+        d="M21 15.203c-3.2 0-5.8 2.6-5.8 5.8s2.6 5.8 5.8 5.8 5.8-2.6 5.8-5.8-2.6-5.8-5.8-5.8zm0 9.6c-2.2 0-3.8-1.6-3.8-3.8s1.6-3.8 3.8-3.8 3.8 1.6 3.8 3.8-1.6 3.8-3.8 3.8zm9.6-11.2c-.4 0-.8-.4-.8-.8s.4-.8.8-.8.8.4.8.8-.4.8-.8.8z"
+      />
+    </svg>
+  );
+};

@@ -11,11 +11,7 @@ const siteMetadata = {
   socialBanner: "/social-banner.png",
   email: "pljh0906@yonsei.ac.kr",
   github: "https://github.com/jun-brro",
-  twitter: "https://twitter.com",
-  facebook: "https://facebook.com",
-  youtube: "https://youtube.com",
-  linkedin: "https://www.linkedin.com",
-  dribbble: "https://www.dribbble.com",
+  linkedin: "https://www.linkedin.com/in/junhyeong-park-81749b288/",
   locale: "en-US",
 };
 
