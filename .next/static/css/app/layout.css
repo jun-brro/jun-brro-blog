@@ -1253,6 +1253,9 @@ select {
 .top-6 {
   top: 1.5rem;
 }
+.right-\[-30px\] {
+  right: -30px;
+}
 .-z-10 {
   z-index: -10;
 }
@@ -1383,6 +1386,12 @@ select {
 .mt-8 {
   margin-top: 2rem;
 }
+.ml-auto {
+  margin-left: auto;
+}
+.mr-1 {
+  margin-right: 0.25rem;
+}
 .block {
   display: block;
 }
@@ -1431,6 +1440,15 @@ select {
 .h-full {
   height: 100%;
 }
+.h-10 {
+  height: 2.5rem;
+}
+.h-16 {
+  height: 4rem;
+}
+.h-8 {
+  height: 2rem;
+}
 .max-h-\[80vh\] {
   max-height: 80vh;
 }
@@ -1468,6 +1486,15 @@ select {
 }
 .w-11\/12 {
   width: 91.666667%;
+}
+.w-10 {
+  width: 2.5rem;
+}
+.w-16 {
+  width: 4rem;
+}
+.w-8 {
+  width: 2rem;
 }
 .max-w-max {
   max-width: -moz-max-content;
@@ -1525,6 +1552,9 @@ select {
 .grid-rows-2 {
   grid-template-rows: repeat(2, minmax(0, 1fr));
 }
+.flex-row {
+  flex-direction: row;
+}
 .flex-col {
   flex-direction: column;
 }
@@ -1571,6 +1601,11 @@ select {
   --tw-space-y-reverse: 0;
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 .self-start {
   align-self: flex-start;
@@ -1833,6 +1868,9 @@ select {
 }
 .text-center {
   text-align: center;
+}
+.text-right {
+  text-align: right;
 }
 .font-in {
   font-family: var(--font-in);
