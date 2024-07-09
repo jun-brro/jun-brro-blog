@@ -21,29 +21,30 @@ const supabase = createClientComponentClient();
 const Header = ({ openLoginModal, openSignupModal }) => {
   const [mode, setMode] = useThemeSwitch();
   const [click, setClick] = useState(false);
-  const [nickname, setNickname] = useState("");
   const router = useRouter();
   const { user } = useAuth();
+  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
-    const fetchNickname = async () => {
-      if (user) {
-        const { data, error } = await supabase
-          .from("profiles")
-          .select("username")
-          .eq("id", user.id)
-          .single();
-        if (error) {
-          console.error(error);
+    if (user) {
+      const fetchNickname = async () => {
+        // Authentication 데이터에서 username 가져오기
+        const {
+          data: { user: authUser },
+        } = await supabase.auth.getUser();
+        if (
+          authUser &&
+          authUser.user_metadata &&
+          authUser.user_metadata.username
+        ) {
+          setNickname(authUser.user_metadata.username);
         } else {
-          setNickname(data.username);
+          setNickname(user.email);
         }
-      }
-    };
-
-    fetchNickname();
+      };
+      fetchNickname();
+    }
   }, [user]);
-
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push("/");
@@ -52,6 +53,8 @@ const Header = ({ openLoginModal, openSignupModal }) => {
   const toggle = () => {
     setClick(!click);
   };
+
+  const isAdmin = user?.user_metadata?.email === "avdktlels@gmail.com";
 
   return (
     <header className="w-full p-4 px-5 sm:px-10 flex items-center justify-between">
@@ -62,12 +65,21 @@ const Header = ({ openLoginModal, openSignupModal }) => {
             <span className="text-gray-900 dark:text-white mr-4">
               Hello, {nickname}!
             </span>
-            <Link
-              href="/admin"
-              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
-            >
-              Admin
-            </Link>
+            {isAdmin ? (
+              <Link
+                href="/admin"
+                className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+              >
+                Admin
+              </Link>
+            ) : (
+              <Link
+                href="/mypage"
+                className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+              >
+                My Page
+              </Link>
+            )}
             <button
               onClick={handleLogout}
               className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 ml-4"
@@ -246,43 +258,6 @@ const Header = ({ openLoginModal, openSignupModal }) => {
           )}
         </button>
       </nav>
-
-      <div className="hidden sm:flex items-center">
-        {user ? (
-          <>
-            <span className="text-gray-900 dark:text-white mr-4">
-              Hello, {nickname}!
-            </span>
-            <Link
-              href="/admin"
-              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
-            >
-              Admin
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 ml-4"
-            >
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              onClick={openLoginModal}
-              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
-            >
-              Login
-            </button>
-            <button
-              onClick={openSignupModal}
-              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 ml-4"
-            >
-              Sign Up
-            </button>
-          </>
-        )}
-      </div>
     </header>
   );
 };
