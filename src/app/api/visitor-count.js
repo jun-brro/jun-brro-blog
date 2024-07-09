@@ -1,8 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // 서버사이드 키
-const supabase = createClient(supabaseUrl, supabaseKey);
+import supabase from "@/src/server/supabaseClient";
 
 export default async function handler(req, res) {
   const today = new Date().toISOString().split("T")[0]; // 오늘 날짜 (KST)
