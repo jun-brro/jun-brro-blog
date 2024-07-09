@@ -2,6 +2,6 @@
   "/page": "app/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js",
-  "/not-found": "app/not-found.js",
-  "/blogs/[slug]/page": "app/blogs/[slug]/page.js"
+  "/blogs/[slug]/page": "app/blogs/[slug]/page.js",
+  "/(about)/about/page": "app/(about)/about/page.js"
 }

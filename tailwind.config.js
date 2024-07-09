@@ -12,7 +12,11 @@ module.exports = {
         dark: "#1b1b1b",
         light: "#fff",
         accent: "#7B00D3",
-        accentDark: "#ffdb4d",
+        accenthover: "#6A00B8",
+        accentDark: {
+          DEFAULT: "#ffdb4d",
+          hover: "#e6c232",
+        },
         gray: "#747474",
       },
       fontFamily: {

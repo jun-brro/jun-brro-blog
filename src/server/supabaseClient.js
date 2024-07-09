@@ -9,7 +9,6 @@ const supabaseOptions = {
   },
 };
 
-// 클라이언트 측에서 localStorage를 추가
 if (typeof window !== "undefined") {
   supabaseOptions.auth.storage = localStorage;
 }
