@@ -1,4 +1,4 @@
-import supabase from "@/src/server/supabaseClient";
+import supabase from "/src/server/supabaseClient";
 
 export default async function handler(req, res) {
   const today = new Date().toISOString().split("T")[0]; // 오늘 날짜 (KST)

@@ -6,7 +6,7 @@ import { allBlogs } from "contentlayer/generated";
 import { slug } from "github-slugger";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import PostComment from "../../../components/PostComment";
+import PostComment from "@/src/components/Blog/PostComment";
 
 export async function generateStaticParams() {
   return allBlogs.map((blog) => ({ slug: blog._raw.flattenedPath }));
@@ -117,18 +117,23 @@ export default function BlogPage({ params }) {
         </div>
         <BlogDetails blog={blog} slug={params.slug} />
         <div className="grid grid-cols-12  gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:px-10">
-          <div className="col-span-12  lg:col-span-4">
+          <div className="col-span-12 lg:col-span-3">
+            {" "}
             <details
-              className="border-[1px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto"
+              className="border-[0.5px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto" // 테두리 두께를 줄였습니다
               open
             >
               <summary className="text-lg font-semibold capitalize cursor-pointer">
-                Table Of Content
+                &nbsp;&nbsp;Table Of Content
               </summary>
               <ul className="mt-4 font-in text-base">
                 {blog.toc.map((heading) => {
                   return (
-                    <li key={`#${heading.slug}`} className="py-1">
+                    <li
+                      key={`#${heading.slug}`}
+                      className="py-1 hover:scale-105 transition-transform"
+                    >
+                      {" "}
                       <a
                         href={`#${heading.slug}`}
                         data-level={heading.level}
@@ -153,9 +158,12 @@ export default function BlogPage({ params }) {
               </ul>
             </details>
           </div>
-          <RenderMdx blog={blog} />
+          <div className="col-span-12 lg:col-span-9">
+            {" "}
+            <RenderMdx blog={blog} />
+          </div>
         </div>
-        <PostComment postTitle={blog.title} /> {/* title을 postTitle로 전달 */}
+        <PostComment postTitle={blog.title} />
       </article>
     </>
   );

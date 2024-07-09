@@ -48,7 +48,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full p-4 px-5 sm:px-10 flex items-center justify-between">
+    <header className="w-full p-5 px-7 sm:px-10 flex items-center justify-between">
       <Logo />
       <div className="flex items-center">
         <button
@@ -166,10 +166,10 @@ const Header = () => {
       >
         <div className="flex flex-col items-center">
           <div className="flex items-center space-x-4 mb-2">
-            <Link href="/" className="text-sm">
+            <Link href="/" className="text-m font-pretendard font-bold">
               Home
             </Link>
-            <Link href="/about" className="text-sm">
+            <Link href="/about" className="text-m font-pretendard font-bold">
               About
             </Link>
             <a
@@ -201,7 +201,7 @@ const Header = () => {
             </a>
           </div>
           <div className="text-gray-900 text-center">
-            <span className="block text-m font-pretendard font-semibold">
+            <span className="block text-m font-pretendard font-medium">
               Total Visitors: {visitorCount.totalCount}&nbsp;&nbsp;&nbsp; Today:{" "}
               {visitorCount.todayCount}
             </span>
