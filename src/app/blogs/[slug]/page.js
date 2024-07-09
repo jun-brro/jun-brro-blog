@@ -49,12 +49,6 @@ export async function generateMetadata({ params }) {
       images: ogImages,
       authors: authors.length > 0 ? authors : [siteMetadata.author],
     },
-    twitter: {
-      card: "summary_large_image",
-      title: blog.title,
-      description: blog.description,
-      images: ogImages,
-    },
   };
 }
 
@@ -161,8 +155,7 @@ export default function BlogPage({ params }) {
           </div>
           <RenderMdx blog={blog} />
         </div>
-        <PostComment postId={params.slug} />{" "}
-        {/* 2. PostComment 컴포넌트 추가 */}
+        <PostComment postTitle={blog.title} /> {/* title을 postTitle로 전달 */}
       </article>
     </>
   );

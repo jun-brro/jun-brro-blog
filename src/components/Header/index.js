@@ -60,49 +60,6 @@ const Header = ({ openLoginModal, openSignupModal }) => {
     <header className="w-full p-4 px-5 sm:px-10 flex items-center justify-between">
       <Logo />
       <div className="flex items-center">
-        {user ? (
-          <>
-            <span className="text-gray-900 dark:text-white mr-4">
-              Hello, {nickname}!
-            </span>
-            {isAdmin ? (
-              <Link
-                href="/admin"
-                className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
-              >
-                Admin
-              </Link>
-            ) : (
-              <Link
-                href="/mypage"
-                className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
-              >
-                My Page
-              </Link>
-            )}
-            <button
-              onClick={handleLogout}
-              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 ml-4"
-            >
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              onClick={openLoginModal}
-              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
-            >
-              Login
-            </button>
-            <button
-              onClick={openSignupModal}
-              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 ml-4"
-            >
-              Sign Up
-            </button>
-          </>
-        )}
         <button
           className="inline-block sm:hidden z-50 ml-4"
           onClick={toggle}

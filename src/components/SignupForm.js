@@ -1,9 +1,7 @@
 "use client";
 import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import supabase from "../server/supabaseClient.js";
 import { XIcon } from "@heroicons/react/solid";
-
-const supabase = createClientComponentClient();
 
 const SignupForm = ({ setIsLogin, closeModal }) => {
   const [email, setEmail] = useState("");
@@ -15,14 +13,21 @@ const SignupForm = ({ setIsLogin, closeModal }) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: { username },
-      },
     });
+
     if (error) {
       alert(error.message);
     } else {
-      closeModal();
+      const user = supabase.auth.user();
+      const { error: insertError } = await supabase
+        .from("users")
+        .insert([{ id: user.id, email, username }]);
+
+      if (insertError) {
+        alert(insertError.message);
+      } else {
+        closeModal();
+      }
     }
   };
 
