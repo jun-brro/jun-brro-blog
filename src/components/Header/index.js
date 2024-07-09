@@ -2,7 +2,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
 import {
-  InstagramIcon,
   GithubIcon,
   LinkedinIcon,
   MoonIcon,
@@ -19,7 +18,7 @@ import { useAuth } from "../../context/AuthContext";
 
 const supabase = createClientComponentClient();
 
-const Header = () => {
+const Header = ({ openLoginModal, openSignupModal }) => {
   const [mode, setMode] = useThemeSwitch();
   const [click, setClick] = useState(false);
   const [nickname, setNickname] = useState("");
@@ -29,12 +28,16 @@ const Header = () => {
   useEffect(() => {
     const fetchNickname = async () => {
       if (user) {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from("profiles")
-          .select("nickname")
+          .select("username")
           .eq("id", user.id)
           .single();
-        setNickname(data.nickname);
+        if (error) {
+          console.error(error);
+        } else {
+          setNickname(data.username);
+        }
       }
     };
 
@@ -53,44 +56,80 @@ const Header = () => {
   return (
     <header className="w-full p-4 px-5 sm:px-10 flex items-center justify-between">
       <Logo />
-      <button
-        className="inline-block sm:hidden z-50"
-        onClick={toggle}
-        aria-label="Hamburger Menu"
-      >
-        <div className="w-6 cursor-pointer transition-all ease duration-300">
-          <div className="relative">
-            <span
-              className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all ease duration-200"
-              style={{
-                transform: click
-                  ? "rotate(-45deg) translateY(0)"
-                  : "rotate(0deg) translateY(6px)",
-              }}
-            >
-              &nbsp;
+      <div className="flex items-center">
+        {user ? (
+          <>
+            <span className="text-gray-900 dark:text-white mr-4">
+              Hello, {nickname}!
             </span>
-            <span
-              className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all ease duration-200"
-              style={{
-                opacity: click ? 0 : 1,
-              }}
+            <Link
+              href="/admin"
+              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
             >
-              &nbsp;
-            </span>
-            <span
-              className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all ease duration-200"
-              style={{
-                transform: click
-                  ? "rotate(45deg) translateY(0)"
-                  : "rotate(0deg) translateY(-6px)",
-              }}
+              Admin
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 ml-4"
             >
-              &nbsp;
-            </span>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={openLoginModal}
+              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+            >
+              Login
+            </button>
+            <button
+              onClick={openSignupModal}
+              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 ml-4"
+            >
+              Sign Up
+            </button>
+          </>
+        )}
+        <button
+          className="inline-block sm:hidden z-50 ml-4"
+          onClick={toggle}
+          aria-label="Hamburger Menu"
+        >
+          <div className="w-6 cursor-pointer transition-all ease duration-300">
+            <div className="relative">
+              <span
+                className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all ease duration-200"
+                style={{
+                  transform: click
+                    ? "rotate(-45deg) translateY(0)"
+                    : "rotate(0deg) translateY(6px)",
+                }}
+              >
+                &nbsp;
+              </span>
+              <span
+                className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all ease duration-200"
+                style={{
+                  opacity: click ? 0 : 1,
+                }}
+              >
+                &nbsp;
+              </span>
+              <span
+                className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all ease duration-200"
+                style={{
+                  transform: click
+                    ? "rotate(45deg) translateY(0)"
+                    : "rotate(0deg) translateY(-6px)",
+                }}
+              >
+                &nbsp;
+              </span>
+            </div>
           </div>
-        </div>
-      </button>
+        </button>
+      </div>
 
       <nav
         className="w-max py-2 px-4 sm:px-6 border border-solid border-dark rounded-full font-medium capitalize items-center flex sm:hidden
@@ -229,18 +268,18 @@ const Header = () => {
           </>
         ) : (
           <>
-            <Link
-              href="/login"
+            <button
+              onClick={openLoginModal}
               className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
             >
               Login
-            </Link>
-            <Link
-              href="/signup"
+            </button>
+            <button
+              onClick={openSignupModal}
               className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 ml-4"
             >
               Sign Up
-            </Link>
+            </button>
           </>
         )}
       </div>

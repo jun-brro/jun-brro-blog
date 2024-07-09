@@ -1,7 +1,7 @@
 import "./globals.css";
 import { cx } from "@/src/utils";
 import { Inter, Manrope } from "next/font/google";
-import Header from "@/src/components/Header";
+import HeaderWrapper from "../components/HeaderWrapper"; // 클라이언트 상태 관리를 위한 Wrapper 컴포넌트
 import Footer from "../components/Footer";
 import siteMetadata from "../utils/siteMetaData";
 import Script from "next/script";
@@ -23,7 +23,7 @@ export const metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
   title: {
     template: `%s | ${siteMetadata.title}`,
-    default: siteMetadata.title, // a default is required when creating a template
+    default: siteMetadata.title,
   },
   description: siteMetadata.description,
   openGraph: {
@@ -57,6 +57,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <title>{siteMetadata.title}</title>
+      </head>
       <body
         className={cx(
           inter.variable,
@@ -72,7 +75,7 @@ export default function RootLayout({ children }) {
     document.documentElement.classList.remove('dark')
   }`}
           </Script>
-          <Header />
+          <HeaderWrapper />
           {children}
           <Footer />
         </ClientWrapper>
