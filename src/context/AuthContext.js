@@ -1,11 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import supabase from "@/src/server/supabaseClientServer";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const supabase = createClientComponentClient();
 
   useEffect(() => {
     const getUserProfile = async () => {
