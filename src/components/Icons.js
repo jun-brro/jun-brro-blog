@@ -8,7 +8,10 @@ export const SunIcon = ({ className, ...rest }) => (
     height="24"
     viewBox="0 0 24 24"
     {...rest}
-    className={cx("w-full h-auto", className)}
+    className={cx(
+      "w-full h-auto transform transition-transform hover:scale-110",
+      className
+    )}
   >
     <rect x="0" y="0" width="24" height="24" fill="rgba(255, 255, 255, 0)" />
     <g
@@ -164,7 +167,10 @@ export const MoonIcon = ({ className, ...rest }) => (
     height="24"
     viewBox="0 0 24 24"
     {...rest}
-    className={cx("w-full h-auto", className)}
+    className={cx(
+      "w-full h-auto transform transition-transform hover:scale-110",
+      className
+    )}
   >
     <g
       fill="none"

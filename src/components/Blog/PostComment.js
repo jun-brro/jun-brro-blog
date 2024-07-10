@@ -125,7 +125,7 @@ export default function PostComment({ postTitle }) {
       .filter((comment) => comment.parent_id === parentId)
       .map((comment) => (
         <div key={comment.id} className="mb-4 ml-4">
-          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded shadow-md">
+          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded">
             <p className="text-gray-800 dark:text-gray-300 mb-2">
               <strong>{comment.username}</strong>
             </p>
@@ -138,16 +138,17 @@ export default function PostComment({ postTitle }) {
               })}
             </p>
             <button
+              onClick={() => setReplyTo(comment.id)}
+              className="mt-2 py-1 px-2 bg-accent dark:bg-accentDark text-white dark:text-black rounded hover:bg-accenthover dark:hover:bg-accentDark-hover transition text-sm"
+            >
+              Reply
+            </button>
+            &nbsp;&nbsp;
+            <button
               onClick={() => confirmDelete(comment.id)}
               className="mt-2 py-1 px-2 bg-red-500 dark:bg-red-700 text-white rounded hover:bg-red-600 dark:hover:bg-red-600 transition text-sm"
             >
               Delete
-            </button>
-            <button
-              onClick={() => setReplyTo(comment.id)}
-              className="mt-2 py-1 px-2 bg-blue-500 dark:bg-blue-700 text-white rounded hover:bg-blue-600 dark:hover:bg-blue-600 transition text-sm"
-            >
-              Reply
             </button>
             {replyTo === comment.id && (
               <form
@@ -163,7 +164,7 @@ export default function PostComment({ postTitle }) {
                     placeholder="Username"
                     value={replyUsername}
                     onChange={(e) => setReplyUsername(e.target.value)}
-                    className="flex-1 p-2 mb-2 border border-gray-300 dark:border-gray-600 rounded bg-transparent dark:bg-gray-900"
+                    className="flex-1 p-2 mb-2 border border-gray-300 dark:border-gray-600 rounded-3xl bg-transparent dark:bg-gray-900"
                     required
                   />
                   <input
@@ -171,7 +172,7 @@ export default function PostComment({ postTitle }) {
                     placeholder="Password"
                     value={replyPassword}
                     onChange={(e) => setReplyPassword(e.target.value)}
-                    className="flex-1 p-2 mb-2 border border-gray-300 dark:border-gray-600 rounded bg-transparent dark:bg-gray-900"
+                    className="flex-1 p-2 mb-2 border border-gray-300 dark:border-gray-600 rounded-3xl bg-transparent dark:bg-gray-900"
                     required
                   />
                 </div>
@@ -185,7 +186,7 @@ export default function PostComment({ postTitle }) {
                 />
                 <button
                   type="submit"
-                  className="py-1 px-4 bg-accentDark text-white rounded-3xl hover:bg-accentDark-hover transition"
+                  className="py-1 px-4 bg-accent dark:bg-accentDark text-white dark:text-black rounded-3xl hover:bg-accenthover dark:hover:bg-accentDark-hover transition"
                 >
                   Post Reply
                 </button>
@@ -203,7 +204,7 @@ export default function PostComment({ postTitle }) {
   return (
     <section className="w-full flex flex-col p-5 xs:p-10 sm:p-12 md:p-16 lg:p-20 border-b-2 border-solid border-dark dark:border-light text-dark dark:text-light">
       <div className="w-full flex flex-col text-left items-start justify-center px-5 xs:p-10 pb-10 lg:px-16">
-        <h2 className="font-bold dark:text-white capitalize text-4xl xs:text-5xl sxl:text-6xl text-center lg:text-left">
+        <h2 className="font-bold dark:text-white capitalize text-4xl xs:text-3xl sxl:text-6xl text-center lg:text-left">
           Post a Comment
         </h2>
         <form
@@ -238,7 +239,7 @@ export default function PostComment({ postTitle }) {
           />
           <button
             type="submit"
-            className="w-full py-3 px-6 bg-accentDark text-white rounded-3xl hover:bg-accentDark-hover transition"
+            className="w-full py-3 px-6 bg-accent dark:bg-accentDark text-white dark:text-black rounded-3xl hover:bg-accenthover dark:hover:bg-accentDark-hover transition"
           >
             Post Comment
           </button>

@@ -1,5 +1,5 @@
 "use client";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import supabase from "@/src/server/supabaseClient";
 import React, { useEffect, useState } from "react";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -10,11 +10,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
     "환경 변수 NEXT_PUBLIC_SUPABASE_URL 또는 NEXT_PUBLIC_SUPABASE_ANON_KEY가 누락되었습니다."
   );
 }
-
-const supabase = createClientComponentClient({
-  supabaseUrl,
-  supabaseKey: supabaseAnonKey,
-});
 
 const ViewCounter = ({ slug, noCount = false, showCount = true }) => {
   const [views, setViews] = useState(0);

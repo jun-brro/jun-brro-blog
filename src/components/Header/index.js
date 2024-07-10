@@ -139,7 +139,7 @@ const Header = () => {
             <button
               onClick={() => setMode(mode === "light" ? "dark" : "light")}
               className={cx(
-                "w-8 h-8 flex items-center justify-center rounded-full p-2",
+                "w-8 h-8 flex items-center justify-center rounded-full p-2 transform transition-transform hover:scale-105",
                 mode === "light" ? "bg-dark text-light" : "bg-light text-dark"
               )}
               aria-label="theme-switcher"
@@ -166,12 +166,19 @@ const Header = () => {
       >
         <div className="flex flex-col items-center">
           <div className="flex items-center space-x-4 mb-2">
-            <Link href="/" className="text-m font-pretendard font-bold">
+            <Link
+              href="/"
+              className="text-m font-pretendard font-bold transform transition-transform hover:scale-110"
+            >
               Home
             </Link>
-            <Link href="/about" className="text-m font-pretendard font-bold">
+            <Link
+              href="/about"
+              className="text-m font-pretendard font-bold transform transition-transform hover:scale-110"
+            >
               About
             </Link>
+
             <a
               href={siteMetadata.github}
               rel="noopener noreferrer"

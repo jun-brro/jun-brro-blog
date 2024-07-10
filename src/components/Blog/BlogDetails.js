@@ -1,22 +1,32 @@
+"use client";
+import { useEffect } from "react";
 import { format, parseISO } from "date-fns";
 import Link from "next/link";
-import React from "react";
-import { slug } from "github-slugger";
+import { slug as githubSlug } from "github-slugger";
 import ViewCounter from "./ViewCounter";
+import updateReadingTime from "@/src/utils/updateReadingTime";
 
 const BlogDetails = ({ blog, slug: blogSlug }) => {
+  useEffect(() => {
+    updateReadingTime(blogSlug, blog.body.raw);
+  }, [blogSlug, blog.body.raw]);
+
   return (
-    <div className="px-2  md:px-10 bg-accent dark:bg-accentDark text-light dark:text-dark py-2 flex items-center justify-around flex-wrap text-lg sm:text-xl font-medium mx-5  md:mx-10 rounded-lg">
-      <time className="m-3">
-        {format(parseISO(blog.publishedAt), "LLLL d, yyyy")}
-      </time>
-      <span className="m-3">
-        <ViewCounter slug={blogSlug} />
-      </span>
-      <div className="m-3">{blog.readingTime.text}</div>
-      <Link href={`/categories/${slug(blog.tags[0])}`} className="m-3">
-        #{blog.tags[0]}
-      </Link>
+    <div className="bg-accent dark:bg-accentDark text-light dark:text-dark py-2 text-lg sm:text-xl font-medium rounded-lg">
+      <div className="p-4 ml-3">
+        <time className="block mb-2">
+          {format(parseISO(blog.publishedAt), "LLLL d, yyyy")}
+        </time>
+        <span className="block mb-2">
+          <ViewCounter slug={blogSlug} />
+        </span>
+        <Link
+          href={`/categories/${githubSlug(blog.tags[0])}`}
+          className="block mb-2 hover:scale-105 transition-transform"
+        >
+          #{blog.tags[0]}
+        </Link>
+      </div>
     </div>
   );
 };
