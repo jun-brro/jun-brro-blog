@@ -20,6 +20,7 @@ module.exports = {
         gray: "#747474",
       },
       fontFamily: {
+        sans: ["Pretendard", "sans-serif"], // 기본 sans-serif 폰트를 Pretendard로 설정
         mr: ["var(--font-mr)"],
         in: ["var(--font-in)"],
       },

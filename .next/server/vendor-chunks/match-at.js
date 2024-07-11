@@ -1,0 +1,24 @@
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+exports.id = "vendor-chunks/match-at";
+exports.ids = ["vendor-chunks/match-at"];
+exports.modules = {
+
+/***/ "(ssr)/./node_modules/match-at/lib/matchAt.js":
+/*!**********************************************!*\
+  !*** ./node_modules/match-at/lib/matchAt.js ***!
+  \**********************************************/
+/***/ ((module) => {
+
+eval("function getRelocatable(re) {\n  // In the future, this could use a WeakMap instead of an expando.\n  if (!re.__matchAtRelocatable) {\n    // Disjunctions are the lowest-precedence operator, so we can make any\n    // pattern match the empty string by appending `|()` to it:\n    // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-patterns\n    var source = re.source + '|()';\n\n    // We always make the new regex global.\n    var flags = 'g' + (re.ignoreCase ? 'i' : '') + (re.multiline ? 'm' : '') + (re.unicode ? 'u' : '')\n    // sticky (/.../y) doesn't make sense in conjunction with our relocation\n    // logic, so we ignore it here.\n    ;\n\n    re.__matchAtRelocatable = new RegExp(source, flags);\n  }\n  return re.__matchAtRelocatable;\n}\n\nfunction matchAt(re, str, pos) {\n  if (re.global || re.sticky) {\n    throw new Error('matchAt(...): Only non-global regexes are supported');\n  }\n  var reloc = getRelocatable(re);\n  reloc.lastIndex = pos;\n  var match = reloc.exec(str);\n  // Last capturing group is our sentinel that indicates whether the regex\n  // matched at the given location.\n  if (match[match.length - 1] == null) {\n    // Original regex matched.\n    match.length = match.length - 1;\n    return match;\n  } else {\n    return null;\n  }\n}\n\nmodule.exports = matchAt;//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9ub2RlX21vZHVsZXMvbWF0Y2gtYXQvbGliL21hdGNoQXQuanMiLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLElBQUk7QUFDSjtBQUNBO0FBQ0E7O0FBRUEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9kZXZlbG9wZXItYmxvZy1zdGFydGVyLWNvZGUvLi9ub2RlX21vZHVsZXMvbWF0Y2gtYXQvbGliL21hdGNoQXQuanM/OWJhMyJdLCJzb3VyY2VzQ29udGVudCI6WyJmdW5jdGlvbiBnZXRSZWxvY2F0YWJsZShyZSkge1xuICAvLyBJbiB0aGUgZnV0dXJlLCB0aGlzIGNvdWxkIHVzZSBhIFdlYWtNYXAgaW5zdGVhZCBvZiBhbiBleHBhbmRvLlxuICBpZiAoIXJlLl9fbWF0Y2hBdFJlbG9jYXRhYmxlKSB7XG4gICAgLy8gRGlzanVuY3Rpb25zIGFyZSB0aGUgbG93ZXN0LXByZWNlZGVuY2Ugb3BlcmF0b3IsIHNvIHdlIGNhbiBtYWtlIGFueVxuICAgIC8vIHBhdHRlcm4gbWF0Y2ggdGhlIGVtcHR5IHN0cmluZyBieSBhcHBlbmRpbmcgYHwoKWAgdG8gaXQ6XG4gICAgLy8gaHR0cHM6Ly9wZW9wbGUubW96aWxsYS5vcmcvfmpvcmVuZG9yZmYvZXM2LWRyYWZ0Lmh0bWwjc2VjLXBhdHRlcm5zXG4gICAgdmFyIHNvdXJjZSA9IHJlLnNvdXJjZSArICd8KCknO1xuXG4gICAgLy8gV2UgYWx3YXlzIG1ha2UgdGhlIG5ldyByZWdleCBnbG9iYWwuXG4gICAgdmFyIGZsYWdzID0gJ2cnICsgKHJlLmlnbm9yZUNhc2UgPyAnaScgOiAnJykgKyAocmUubXVsdGlsaW5lID8gJ20nIDogJycpICsgKHJlLnVuaWNvZGUgPyAndScgOiAnJylcbiAgICAvLyBzdGlja3kgKC8uLi4veSkgZG9lc24ndCBtYWtlIHNlbnNlIGluIGNvbmp1bmN0aW9uIHdpdGggb3VyIHJlbG9jYXRpb25cbiAgICAvLyBsb2dpYywgc28gd2UgaWdub3JlIGl0IGhlcmUuXG4gICAgO1xuXG4gICAgcmUuX19tYXRjaEF0UmVsb2NhdGFibGUgPSBuZXcgUmVnRXhwKHNvdXJjZSwgZmxhZ3MpO1xuICB9XG4gIHJldHVybiByZS5fX21hdGNoQXRSZWxvY2F0YWJsZTtcbn1cblxuZnVuY3Rpb24gbWF0Y2hBdChyZSwgc3RyLCBwb3MpIHtcbiAgaWYgKHJlLmdsb2JhbCB8fCByZS5zdGlja3kpIHtcbiAgICB0aHJvdyBuZXcgRXJyb3IoJ21hdGNoQXQoLi4uKTogT25seSBub24tZ2xvYmFsIHJlZ2V4ZXMgYXJlIHN1cHBvcnRlZCcpO1xuICB9XG4gIHZhciByZWxvYyA9IGdldFJlbG9jYXRhYmxlKHJlKTtcbiAgcmVsb2MubGFzdEluZGV4ID0gcG9zO1xuICB2YXIgbWF0Y2ggPSByZWxvYy5leGVjKHN0cik7XG4gIC8vIExhc3QgY2FwdHVyaW5nIGdyb3VwIGlzIG91ciBzZW50aW5lbCB0aGF0IGluZGljYXRlcyB3aGV0aGVyIHRoZSByZWdleFxuICAvLyBtYXRjaGVkIGF0IHRoZSBnaXZlbiBsb2NhdGlvbi5cbiAgaWYgKG1hdGNoW21hdGNoLmxlbmd0aCAtIDFdID09IG51bGwpIHtcbiAgICAvLyBPcmlnaW5hbCByZWdleCBtYXRjaGVkLlxuICAgIG1hdGNoLmxlbmd0aCA9IG1hdGNoLmxlbmd0aCAtIDE7XG4gICAgcmV0dXJuIG1hdGNoO1xuICB9IGVsc2Uge1xuICAgIHJldHVybiBudWxsO1xuICB9XG59XG5cbm1vZHVsZS5leHBvcnRzID0gbWF0Y2hBdDsiXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(ssr)/./node_modules/match-at/lib/matchAt.js\n");
+
+/***/ })
+
+};
+;

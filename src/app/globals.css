@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Pretendard font */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
 html {
   scroll-behavior: smooth;
+  font-family: "Pretendard", sans-serif;
+}
+
+body {
+  font-family: "Pretendard", sans-serif;
 }
 
 h1 > a > .icon.icon-link:before,
@@ -79,6 +87,7 @@ code[data-line-numbers-max-digits="3"] > [data-line]::before {
   font-size: 1rem;
   color: #747474;
 }
+
 /* Fade in animation */
 @keyframes fadeIn {
   from {

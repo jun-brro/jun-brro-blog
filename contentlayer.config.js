@@ -5,6 +5,8 @@ import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import GithubSlugger from "github-slugger";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 const Blog = defineDocumentType(() => ({
   name: "Blog",
@@ -81,15 +83,15 @@ const codeOptions = {
 };
 
 export default makeSource({
-  /* options */
   contentDirPath: "content",
   documentTypes: [Blog],
   mdx: {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkGfm, remarkMath],
     rehypePlugins: [
       rehypeSlug,
-      [rehypeAutolinkHeadings, { behavior: "append" }],
-      [rehypePrettyCode, codeOptions],
+      rehypeAutolinkHeadings,
+      rehypePrettyCode,
+      rehypeKatex,
     ],
   },
 });
