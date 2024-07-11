@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "postbuild": "next-sitemap",
+    "export": "next export",
     "start": "next start",
-    "lint": "next lint"
+    "dev": "next dev",
+    "postbuild": "next-sitemap",
+    "build-export": "next build && next export"
   },
   "dependencies": {
     "@dotlottie/react-player": "^1.2.1",
