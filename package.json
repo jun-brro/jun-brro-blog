@@ -4,11 +4,9 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "export": "next export",
     "start": "next start",
     "dev": "next dev",
-    "postbuild": "next-sitemap",
-    "build-export": "next build && next export"
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@dotlottie/react-player": "^1.2.1",
