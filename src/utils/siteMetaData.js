@@ -3,7 +3,7 @@ const siteMetadata = {
   author: "Jun-Brro",
   headerTitle: "Jun-Brro Blog",
   description:
-    "Jun-Brro blog created with Next.js, Tailwind.css and contentlayer.",
+    "Jun-Brro Tech & Buisness blog created with Next.js, Tailwind.css and contentlayer.",
   language: "en-us",
   theme: "system",
   siteUrl: "https://jun-brro.kr",
