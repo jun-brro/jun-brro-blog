@@ -5,6 +5,6 @@
   "/blogs/[slug]/page": "app/blogs/[slug]/page.js",
   "/api/blogs/route": "app/api/blogs/route.js",
   "/categories/[slug]/page": "app/categories/[slug]/page.js",
-  "/(about)/about/page": "app/(about)/about/page.js",
-  "/(about)/contact/page": "app/(about)/contact/page.js"
+  "/(about)/contact/page": "app/(about)/contact/page.js",
+  "/(about)/about/page": "app/(about)/about/page.js"
 }
