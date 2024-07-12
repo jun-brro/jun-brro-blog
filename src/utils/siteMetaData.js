@@ -3,7 +3,7 @@ const siteMetadata = {
   author: "Jun-Brro",
   headerTitle: "Jun-Brro Blog",
   description:
-    "Jun-Brro Tech & Buisness Blog. Deep Learning & Buisness (Start-Up) & Web Development & etc.",
+    "Jun-Brro Tech & Buisness Blog. Deep Learning & Buisness & Web Development",
   language: "en-us",
   theme: "system",
   siteUrl: "https://jun-brro.kr",
