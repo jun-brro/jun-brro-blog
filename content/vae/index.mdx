@@ -1,0 +1,170 @@
+---
+title: "[Paper Review] VAE (Variational Autoencoders)"
+description: "Variational Autoencoders (VAEs) employ a probabilistic approach to latent variable modeling, optimizing a variational lower bound to perform efficient approximate posterior inference and learning of generative models with continuous latent variables."
+image: "../../public/blogs/vae/screenshot.png"
+publishedAt: "2024-07-13"
+updatedAt: "2024-07-13"
+author: "junbrro"
+isPublished: true
+tags:
+  - Deep Learning
+---
+
+This post is reviewing the VAE paper.
+
+### Citations
+
+[VAE : Auto-Encoding Variational Bayes - 논문 리뷰](https://velog.io/@lee9843/VAE-Auto-Encoding-Variational-Bayes-논문-리뷰)
+
+Thumbnail image: [towardsdatascience](https://towardsdatascience.com/difference-between-autoencoder-ae-and-variational-autoencoder-vae-ed7be1c038f2)
+
+# Introduction
+
+How can we perform efficient approximate inference and learning with directed probabilistic models whose continuous latent variables and/or parameters have intractable posterior distributions?
+
+The answer lies in **Variational Bayesian** methods, which involve the optimization of approximations to intractable posterior probabilities.
+
+### Variational Bayesian (Appendix F)
+
+Marginal Likelihood: The combination of KL divergence and the lower bound.
+
+![Marginal Likelihood](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/fc4cbed7-6b60-40ea-a9c7-c5c9fdb4ba59)
+
+![Variational Lower Bound](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/4edcf087-3b7e-4073-9063-b705bdbc8f99)
+
+Variational lower bound to the marginal likelihood:
+
+![Variational Lower Bound to Marginal Likelihood](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/102829cb-e02d-49ce-bf67-f8da7b6058cd)
+
+Monte Carlo estimate of the variational lower bound:
+
+![Monte Carlo Estimate](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/c9c61a64-253d-4607-acda-1466ca006569)
+
+For more on [Variational Bayesian methods](https://en.wikipedia.org/wiki/Variational_Bayesian_methods).
+
+### Stochastic Gradient Variational Bayes (SGVB)
+
+The **SGVB estimator** is a scalable estimator for variational inference that utilizes stochastic gradients, enabling optimization over large datasets. It facilitates efficient backpropagation through recognition models by approximating gradients, making it useful for efficient approximate posterior inference in almost any model with continuous latent variables and/or parameters.
+
+### Auto-Encoding Variational Bayes (AEVB)
+
+The **AEVB algorithm** makes inference and learning particularly efficient by using the SGVB estimator to optimize a recognition model. This approach allows for very efficient approximate posterior inference using simple ancestral sampling, enabling the efficient learning of model parameters without the need for expensive iterative inference schemes like MCMC per datapoint.
+
+# Method
+
+![Method](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/5d0cf6c3-2880-428d-aec0-4512a9bc64ae)
+
+### Problem Scenario
+
+Considering the dataset below:
+
+![Dataset Scenario](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/4a64183e-7f05-4497-83bc-970973bfb694)
+
+1. The latent variable zi is generated from the prior distribution p_theta(z).
+2. The dataset xi is generated from the conditional distribution p_theta(x|z).
+
+![Dataset Generation](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/e9a6c5fa-d805-425e-872c-f5675c77f4eb)
+
+This approach addresses **intractability** (cannot compute marginal likelihood) and the challenge of **large datasets** (sampling should be conducted for each data point, which is costly for batch optimization).
+
+The research proposes solutions for three problems:
+
+1. **Efficient approximate ML or MAP estimation** for the parameters theta. These parameters can be of interest themselves for analyzing natural processes and generating artificial data.
+2. **Efficient approximate posterior inference** of the latent variable z given an observed value x for chosen parameters theta. This is useful for coding or data representation tasks.
+3. **Efficient approximate marginal inference** of the variable x. This allows for various inference tasks where a prior over x is required, such as image denoising, inpainting, and super-resolution in computer vision.
+
+To address these problems, the study introduces a recognition model q_theta(z|x) as an approximation to the intractable true posterior p_theta(z|x).
+
+### Method Summary
+
+The recognition model parameters phi are learned together with the generative model parameters theta. Given a data point x, **a stochastic encoder** produces a distribution (e.g., Gaussian) of possible values for the code z that could generate x. **A stochastic decoder** p_theta(x|z) then produces a distribution of possible values of x given z.
+
+![Method Summary](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/019bf071-e7d3-4209-950e-6d160210b558)
+
+### The Variational Bound
+
+Marginal Likelihood log(p_theta(xi)):
+
+![Marginal Likelihood](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/49db5dae-ee1f-45c4-8c91-85161c6b6b23)
+
+Right-hand side (RHS):
+
+1. KL divergence of the approximate from the true posterior (non-negative).
+2. L(theta, phi; xi), the variational lower bound on the marginal likelihood of datapoint i.
+
+![RHS](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/fb3ec5c3-f855-4c93-816e-3bf8b3a9a64d)
+
+![Variational Bound](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/60b1cc4f-2e9b-4ff9-b0e0-85d35c9252cb)
+
+The objective is to differentiate and optimize the lower bound:
+
+![Optimization](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/c243f655-27a7-4e8a-8e68-24756dd07c9e)
+
+This corresponds to calculating the probability of x in Bayes' theorem, known as the Evidence Lower Bound (ELBO). The loss function is derived from this ELBO.
+
+![ELBO](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/6470897e-6044-4b08-b888-eca7da3c6060)
+
+### The SGVB Estimator and AEVB Algorithm
+
+![SGVB Estimator](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/fe40492d-7a49-4cac-ab79-2b049f529a8d)
+
+### Reparameterization Trick
+
+![Reparameterization Trick](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/a99833ee-ffb3-4001-b151-8025747cff67)
+
+Two assumptions needed to compute regularization:
+
+1. The distribution of z that emerges from passing through the encoder, q_phi(z|x), follows a multivariate normal distribution with a diagonal covariance matrix.
+2. The assumed distribution of z, the prior p(z), is that it follows a standard normal distribution with a mean of 0 and a standard deviation of 1.
+
+KLD ensures these assumptions are met and facilitates optimization.
+
+![KLD Assumptions](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/7f263752-d75d-46fd-be1b-6162b0bc9364)
+
+Thus, the approach is differentiable, enabling the calculation of regularization.
+
+# Variational Auto-Encoder (VAE)
+
+The variational approximate posterior is a multivariate Gaussian with a diagonal covariance structure.
+
+![VAE Gaussian](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/8f0c7e31-1e86-4efb-b6fe-4ad6a1f67a55)
+
+The log-likelihood log(p_theta(xi | z^(i, l))) is modeled as a Bernoulli or Gaussian MLP, depending on the data type.
+
+### Appendix C: MLPs as Probabilistic Encoders and Decoders
+
+**Bernoulli MLP:**
+
+![Bernoulli MLP](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/45110c25-7f51-4e49-8a9b-ff277db35107)
+![Bernoulli MLP Details](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/2e849014-0a98-4e90-b443-8cfd5170e81f)
+
+---
+
+**Gaussian MLP:**
+
+![Gaussian MLP](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/bede1ba3-a3be-
+
+4d91-b61a-d7695a60ae50)
+![Gaussian MLP Details](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/ffc15c2a-2085-4789-9a0c-9186e0755a60)
+![Gaussian MLP](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/2c1856a6-7090-473e-a357-11d2c57bc6cb)
+![Gaussian MLP](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/eab9ee56-f060-4e74-9a85-3b893fc0d6e5)
+
+# Experiments
+
+### MNIST & Frey Face Datasets
+
+![Experiments](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/95d86097-c3a2-4450-9745-eb7691b54a28)
+
+### Likelihood Lower Bound
+
+### Marginal Likelihood
+
+![Marginal Likelihood](https://github.com/jun-brro/deep-learning-paper-review/assets/115399447/2ee19c13-08cb-484e-925d-2dfc15f95450)
+
+### Visualization of High-Dimensional Data
+
+# Conclusion & Future Work
+
+The **SGVB estimator and AEVB algorithm** significantly improve variational inference for continuous latent variables, demonstrating theoretical advantages and experimental results.
+
+Future work includes **investigating the use of SGVB and AEVB** in learning hierarchical generative models, particularly with deep neural networks such as convolutional networks for encoders and decoders. Additionally, **applying these methods to dynamic Bayesian networks** for modeling time-series data, extending the application of SGVB to optimize global parameters within models, and exploring supervised models that incorporate latent variables to learn complex noise distributions, enhancing model robustness and predictive performance.
