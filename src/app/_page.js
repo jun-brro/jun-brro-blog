@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
         <title>{siteMetadata.title}</title>
         <meta property="og:title" content={siteMetadata.title} />
         <meta property="og:description" content={siteMetadata.description} />
-        <meta property="og:image" content={siteMetadata.siteLogo} />
+        <meta property="og:image" content={siteMetadata.socialBanner} />
         <meta property="og:url" content={siteMetadata.siteUrl} />
       </Head>
       <AuthProvider>
