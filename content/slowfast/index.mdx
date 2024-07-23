@@ -1,0 +1,82 @@
+---
+title: "[Paper Review] SlowFast Networks for Video Recognition"
+description: "The SlowFast network employs dual pathways, with the Slow Pathway capturing high-resolution spatial details and the Fast Pathway capturing rapid temporal changes, to achieve advanced video recognition."
+image: "../../public/blogs/slowfast/screenshot.png"
+publishedAt: "2024-07-23"
+updatedAt: "2024-07-23"
+author: "junbrro"
+isPublished: true
+tags:
+  - Deep Learning
+---
+
+This post is the review of slowfast paper.
+
+[**Cited - Joochan Github Blog**](https://joochann.github.io/posts/SlowFast-Networks-for-Video-Recognition/)
+
+# SlowFast Networks for Video Recognition
+
+Video recognition, unlike image recognition, must account for the time domain since the essence of action involves changes over time. Video data needs to capture movement in a three-dimensional space, including the temporal axis, making simple extensions of 2D image processing techniques insufficient. Therefore, a structure is necessary that can introduce existing vision processing techniques on a frame-by-frame basis while retaining past information. Just as neural networks were inspired by neural cells, the SlowFast paper draws from the brain's structure for action recognition.
+
+![SlowFast Network Structure](https://github.com/user-attachments/assets/9a060284-ba46-4e58-93b5-8b59c6f4dd2d)
+
+## SlowFast Network Architecture
+
+The SlowFast network is inspired by the human visual system, particularly the M cells and P cells. The Slow Pathway processes high-resolution spatial information, while the Fast Pathway focuses on temporal information such as motion. Mimicking this structure, the SlowFast network comprises two distinct pathways.
+
+### Slow Pathway
+
+The Slow Pathway processes input data at a low frame rate, capturing high-resolution spatial information such as color and spatial details. This pathway is designed based on ResNet and aims to retain significant spatial information while improving computational efficiency. The pathway operates on several key principles:
+
+- **Low Frame Rate Sampling**: This reduces the number of frames, focusing on detailed spatial features. By sampling fewer frames, the pathway can dedicate more computational resources to analyzing each frame in greater detail.
+- **High Spatial Resolution**: Preserves detailed spatial information, which is crucial for understanding the scene context and object characteristics. This helps in capturing fine details that are necessary for recognizing complex objects and scenes.
+
+If X_s represents the input to the Slow Pathway and f_s the transformation function, then:
+Y_s = f_s(X_s)
+where Y_s is the output feature map with preserved high spatial resolution.
+
+### Fast Pathway
+
+The Fast Pathway processes input data at a high frame rate, focusing on capturing temporal information such as motion. This pathway also uses a ResNet-based design but samples more frames densely while reducing the number of channels to save computational resources. Key aspects include:
+
+- **High Frame Rate Sampling**: Captures temporal changes effectively by processing more frames. This enables the pathway to accurately detect and analyze motion, which is crucial for understanding dynamic scenes.
+- **Channel Reduction**: Reduces the number of channels to optimize computational efficiency while retaining critical motion information. By lowering the channel count, the network can process frames quickly without compromising too much on the quality of motion detection.
+
+If X_f represents the input to the Fast Pathway and f_f the transformation function, then:
+Y_f = f_f(X_f)
+where Y_f is the output feature map emphasizing temporal information.
+
+![Pathway Details](https://github.com/user-attachments/assets/0d00197a-8c57-4adb-9d8b-1bb8d48175db)
+
+### Lateral Connections
+
+To integrate the information from both pathways, the SlowFast network employs lateral connections to exchange information between the Slow and Fast Pathways. These connections enable complementary effects, allowing each pathway to supplement what the other has not learned. The Slow Pathway provides high-resolution spatial details, while the Fast Pathway captures temporal changes, enabling comprehensive video recognition.
+
+The lateral connections can be represented as:
+Y_s' = Y_s + g(Y_f)
+Y_f' = Y_f + h(Y_s)
+where g and h are transformation functions that map the feature maps between the pathways to enable effective information exchange.
+
+![Lateral Connection Diagram](https://github.com/user-attachments/assets/837c45cd-13d1-4fde-bf83-2454b5542149)
+
+## Experiments and Validation
+
+The SlowFast network has been evaluated on various large-scale video datasets. Key datasets include Kinetics-400, Kinetics-600, Charades, and AVA.
+
+### Kinetics-400 / 600
+
+Kinetics-400 is a video dataset collected from YouTube, comprising 400 classes of actions. It includes 240,000 training video clips and 20,000 validation clips. Kinetics-600 is an extended version with 600 classes and more video clips.
+
+![Kinetics Dataset](https://github.com/user-attachments/assets/91a84661-54c8-48fe-8fe1-967174f31620)
+
+### AVA
+
+The AVA (Atomic Visual Actions) dataset is a high-resolution labeled dataset for human actions in videos. Each frame includes bounding boxes and action tags indicating the actions performed by individuals.
+
+![AVA Dataset](https://github.com/user-attachments/assets/69c74eef-704e-45ab-9c02-ad44e9cd9199)
+
+### Key Experimental Results
+
+On the Kinetics-400 and Kinetics-600 datasets, the SlowFast network outperformed existing state-of-the-art models, particularly those based on 3D convolution. It demonstrated higher accuracy and efficiency. In the Charades dataset, the network showcased its ability to recognize multiple actions simultaneously. In the AVA dataset, it excelled in action detection, proving its effectiveness in capturing both spatial and temporal information.
+
+By integrating the Slow and Fast Pathways, the SlowFast network achieves a balance of spatial and temporal feature extraction, leading to superior performance in video recognition tasks.

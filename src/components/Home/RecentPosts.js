@@ -42,7 +42,7 @@ const RecentPosts = () => {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-rows-2 gap-16 mt-16">
-        {blogs.slice(4, 10).map((blog, index) => (
+        {blogs.slice(4).map((blog, index) => (
           <article key={index} className="col-span-1 row-span-1 relative">
             <BlogLayoutThree blog={blog} />
           </article>
